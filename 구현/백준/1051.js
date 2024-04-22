@@ -20,7 +20,7 @@ function solution(input) {
     }
   }
 
-  console.log(result ** 2);
+  return result ** 2;
 }
 
 // 테스트 코드
@@ -35,4 +35,10 @@ const testCase = [
   ],
 ];
 
-testCase.forEach(input => solution(input[0].toString().trim().split('\n')));
+testCase.forEach(input => {
+  const result = solution(input[0].toString().trim().split('\n'));
+
+  result === input[1]
+    ? console.log('Success')
+    : console.log('Failed ::', result);
+});
