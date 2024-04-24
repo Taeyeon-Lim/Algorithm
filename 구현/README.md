@@ -84,3 +84,36 @@ console.log(result.join('\n'));
 ```
 
 </details>
+
+<details>
+    <summary>[S5] 백준 10431 - 줄세우기</summary>
+
+```js
+const fs = require('fs');
+const input = fs
+  .readFileSync('/dev/stdin')
+  .toString()
+  .trim()
+  .split('\n')
+  .map(v => v.split(' ').map(Number));
+
+const [_, ...cases] = input;
+let result = [];
+
+cases.forEach(testCase => {
+  const [caseNumber, ...children] = testCase;
+  let backStep = 0;
+
+  for (let i = 0; i < 20; i++) {
+    for (let j = 0; j < i; j++) {
+      if (children[j] > children[i]) backStep++;
+    }
+  }
+
+  result.push(caseNumber + ' ' + backStep);
+});
+
+console.log(result.join('\n'));
+```
+
+</details>
