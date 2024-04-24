@@ -1,3 +1,5 @@
+// [S5] 백준 1316 - 그룹 단어 체커
+
 function solution(input) {
   const [_, ...words] = input;
   let result = 0;

@@ -1,3 +1,5 @@
+// [S3] 백준 1051 - 숫자 정사각형
+
 function solution(input) {
   const [size, ...rect] = input;
   const [N, M] = size.split(' ').map(Number);

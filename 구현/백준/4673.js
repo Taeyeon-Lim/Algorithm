@@ -1,3 +1,5 @@
+// [S5] 백준 4673 - 셀프 넘버
+
 function solution() {
   // 생성자 함수
   const generator = num =>
