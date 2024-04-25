@@ -62,7 +62,7 @@ console.log(result);
 ```
 
 </details>
-
+ 
 <details>
     <summary>[S5] 백준 4673 - 셀프 넘버</summary>
 
@@ -134,6 +134,72 @@ cases.forEach(testCase => {
 
   result.push(caseNumber + ' ' + backStep);
 });
+
+console.log(result.join('\n'));
+```
+
+</details>
+
+<details>
+    <summary>[S4] 백준 10828 - 스택</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+const [repeat, ...orders] = input.split('\n');
+const result = [];
+
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.next = null;
+  }
+}
+
+class Stack {
+  constructor() {
+    this.length = 0;
+    this.topNode = null;
+  }
+  empty() {
+    return this.topNode === null ? 1 : 0;
+  }
+  push(element) {
+    const node = new Node(element);
+    node.next = this.topNode;
+    this.topNode = node;
+    this.length++;
+  }
+  pop() {
+    if (this.empty()) return -1;
+
+    const value = this.topNode.data;
+    this.topNode = this.topNode.next;
+    this.length--;
+
+    return value;
+  }
+  size() {
+    return this.length;
+  }
+  top() {
+    if (this.empty()) return -1;
+
+    return this.topNode.data;
+  }
+}
+
+const stack = new Stack();
+
+for (let i = 0; i < repeat; i++) {
+  const [order, element] = orders[i].split(' ');
+
+  if (element) {
+    stack[order](element);
+  } else {
+    result.push(stack[order]());
+  }
+}
 
 console.log(result.join('\n'));
 ```
