@@ -86,6 +86,28 @@ console.log(result.join('\n'));
 </details>
 
 <details>
+    <summary>[S5] 백준 8979 - 올림픽</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+
+const [target, ...goverments] = input.split('\n').map(v => v.split(' '));
+
+goverments.sort((a, b) => b[1] - a[1] || b[2] - a[2] || b[3] - a[3]);
+
+const [_, g, s, b] = goverments.find(g => g[0] === target[1]);
+
+const ranking = goverments.findIndex(
+  ([_, gG, gS, gB]) => gG === g && gS === s && gB === b
+);
+
+console.log(ranking + 1);
+```
+
+</details>
+
+<details>
     <summary>[S5] 백준 10431 - 줄세우기</summary>
 
 ```js
