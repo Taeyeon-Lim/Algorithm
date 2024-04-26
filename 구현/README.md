@@ -122,6 +122,52 @@ console.log(result.join('\n'));
 </details>
 
 <details>
+    <summary>[G5] 백준 5430 - AC</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+const [T, ...testCases] = input.split('\n');
+const result = [];
+
+for (let i = 0; i < T * 3; i += 3) {
+  const p = testCases[i];
+  const n = +testCases[i + 1];
+
+  if (!n) {
+    result.push(p.indexOf('D') === -1 ? '[]' : 'error');
+    continue;
+  }
+
+  const nums = JSON.parse(testCases[i + 2]);
+  let isShift = true;
+  let shift = 0;
+  let pop = 0;
+
+  for (const func of p) {
+    if (func === 'R') {
+      isShift = !isShift;
+    } else {
+      isShift ? shift++ : pop++;
+    }
+  }
+
+  if (shift + pop > n) {
+    result.push('error');
+    continue;
+  }
+
+  const caseResult = nums.slice(shift, n - pop);
+
+  result.push(JSON.stringify(isShift ? caseResult : caseResult.reverse()));
+}
+
+console.log(result.join('\n'));
+```
+
+</details>
+
+<details>
     <summary>[S5] 백준 8979 - 올림픽</summary>
 
 ```js
