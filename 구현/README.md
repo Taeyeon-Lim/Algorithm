@@ -62,7 +62,43 @@ console.log(result);
 ```
 
 </details>
- 
+
+<details>
+    <summary>[S3] 백준 2108 - 통계학</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+const [N, ...numbers] = input.split('\n');
+const nums = numbers.map(Number).sort((a, b) => a - b);
+const maxFrequency_nums = [];
+const map = new Map();
+const result = [];
+let max = 0;
+let sum = 0;
+
+for (const n of nums) {
+  sum += n;
+  max = Math.max(max, (map.get(n) || 0) + 1);
+  map.set(n, (map.get(n) || 0) + 1);
+}
+
+result.push(Math.round(sum / N));
+
+result.push(nums[Math.floor(N / 2)]);
+
+for (const [key, value] of map) {
+  if (value === max) maxFrequency_nums.push(key);
+}
+result.push(maxFrequency_nums[maxFrequency_nums.length === 1 ? 0 : 1]);
+
+result.push(nums[N - 1] - nums[0]);
+
+console.log(result.join('\n'));
+```
+
+</details>
+
 <details>
     <summary>[S5] 백준 4673 - 셀프 넘버</summary>
 
