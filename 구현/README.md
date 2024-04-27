@@ -287,3 +287,63 @@ console.log(result.join('\n'));
 ```
 
 </details>
+
+<details>
+    <summary>[G5] 백준 14503 - 로봇 청소기</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+const [size, robot, ...room] = input
+  .split('\n')
+  .map(v => v.split(' ').map(Number));
+const [N, M] = size;
+const dydx = {
+  0: [-1, 0],
+  1: [0, 1],
+  2: [1, 0],
+  3: [0, -1],
+};
+let [x, y, d] = robot;
+let result = 0;
+
+while (true) {
+  if (!room[x][y]) {
+    room[x][y] = 2;
+    result++;
+  }
+
+  if (
+    (0 < x - 1 && !room[x - 1][y]) ||
+    (0 < y - 1 && !room[x][y - 1]) ||
+    (x + 1 < N && !room[x + 1][y]) ||
+    (y + 1 < M && !room[x][y + 1])
+  ) {
+    d === 0 ? (d = 3) : d--;
+
+    const [dx, dy] = dydx[d];
+    const [nx, ny] = [x + dx, y + dy];
+
+    if (nx <= 0 || N <= nx || ny <= 0 || M <= ny) continue;
+
+    if (!room[nx][ny]) {
+      x = nx;
+      y = ny;
+    }
+  } else {
+    const [dx, dy] = dydx[d];
+    const [nx, ny] = [x + -dx, y + -dy];
+
+    if (room[nx][ny] === 1 || nx <= 0 || N <= nx || ny <= 0 || M <= ny) {
+      break;
+    } else {
+      x = nx;
+      y = ny;
+    }
+  }
+}
+
+console.log(result);
+```
+
+</details>
