@@ -1,6 +1,27 @@
 # 그리디
 
 <details>
+    <summary>[S4] 백준 11047 - 동전 0</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+const [NK, ...coins] = input.split('\n');
+let [N, K] = NK.split(' ').map(Number);
+const coinValues = coins.map(Number);
+let result = 0;
+
+for (let i = N - 1; i >= 0; i--) {
+  result += Math.floor(K / coinValues[i]);
+  K %= coinValues[i];
+}
+
+console.log(result);
+```
+
+</details>
+
+<details>
     <summary>[Lv.1] 프로그래머스 - 체육복</summary>
 
 ```js
