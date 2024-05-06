@@ -25,3 +25,28 @@ console.log(recursion(Number(input)));
 ```
 
 </details>
+
+<details>
+    <summary>[Lv.3] 프로그래머스 - 등굣길</summary>
+
+```js
+function solution(m, n, puddles) {
+  const memo = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
+
+  puddles.forEach(([x, y]) => (memo[y][x] = -1));
+
+  memo[1][1] = 1;
+
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= m; j++) {
+      if (memo[i][j] === -1) continue;
+      if (memo[i][j - 1] !== -1) memo[i][j] += memo[i][j - 1] % 1000000007;
+      if (memo[i - 1][j] !== -1) memo[i][j] += memo[i - 1][j] % 1000000007;
+    }
+  }
+
+  return memo[n][m] % 1000000007;
+}
+```
+
+</details>
