@@ -22,6 +22,38 @@ console.log(result);
 </details>
 
 <details>
+    <summary>[G5] 백준 11000 - 강의실 배정</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const N = Number(input[0]);
+const rooms = [];
+let openClassCount = 0;
+let result = 0;
+
+for (let i = 1; i <= N; i++) {
+  const time = input[i].split(' ').map(Number);
+
+  rooms.push(time[0], -time[1]);
+}
+
+rooms
+  .sort((a, b) =>
+    Math.abs(a) === Math.abs(b) ? a - b : Math.abs(a) - Math.abs(b)
+  )
+  .forEach(room => {
+    room < 0 ? openClassCount-- : openClassCount++;
+
+    result = Math.max(result, openClassCount);
+  });
+
+console.log(result);
+```
+
+</details>
+
+<details>
     <summary>[Lv.1] 프로그래머스 - 체육복</summary>
 
 ```js
