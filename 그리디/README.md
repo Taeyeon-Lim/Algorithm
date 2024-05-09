@@ -54,6 +54,30 @@ console.log(result);
 </details>
 
 <details>
+    <summary>[G5] 백준 12904 - A와 B</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+const [S, T] = input.split('\n');
+const TtoS = [...T];
+let direction = true;
+let current = '';
+
+for (let i = 0; i < T.length - S.length; i++) {
+  current = direction ? TtoS.pop() : TtoS.shift();
+
+  if (current === 'B') direction = !direction;
+}
+
+if (!direction) TtoS.reverse();
+
+console.log(TtoS.join('') === S ? 1 : 0);
+```
+
+</details>
+
+<details>
     <summary>[Lv.1] 프로그래머스 - 체육복</summary>
 
 ```js
