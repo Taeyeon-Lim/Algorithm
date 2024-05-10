@@ -1,6 +1,40 @@
 # DP
 
 <details>
+    <summary>[B1] 백준 2775 - 부녀회장이 될테야</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+const [T, ...kn] = input.split('\n').map(Number);
+const memo = Array.from({ length: 15 }, () => Array(14).fill(0));
+const result = [];
+
+for (let i = 0; i < 15; i++) {
+  for (let j = 0; j < 14; j++) {
+    if (i === 0) {
+      memo[i][j] = j + 1;
+    } else if (j === 0) {
+      memo[i][j] = 1;
+    } else {
+      memo[i][j] = memo[i - 1][j] + memo[i][j - 1];
+    }
+  }
+}
+
+for (let i = 0; i < T; i++) {
+  const k = kn[i * 2];
+  const n = kn[i * 2 + 1] - 1;
+
+  result.push(memo[k][n]);
+}
+
+console.log(result.join('\n'));
+```
+
+</details>
+
+<details>
     <summary>[S3] 백준 1463 - 1로 만들기</summary>
 
 ```js
