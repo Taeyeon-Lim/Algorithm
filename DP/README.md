@@ -35,6 +35,27 @@ console.log(result.join('\n'));
 </details>
 
 <details>
+    <summary>[B1] 백준 2748 - 피보나치 수 2</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+const memo = [0, 1];
+
+const recursion = n => {
+  if (memo[n] !== undefined) return memo[n];
+
+  memo[n] = BigInt(recursion(n - 1)) + BigInt(recursion(n - 2));
+
+  return memo[n];
+};
+
+console.log(recursion(Number(input)).toString());
+```
+
+</details>
+
+<details>
     <summary>[S3] 백준 1463 - 1로 만들기</summary>
 
 ```js
