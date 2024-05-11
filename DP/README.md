@@ -82,6 +82,27 @@ console.log(recursion(Number(input)));
 </details>
 
 <details>
+    <summary>[S3] 백준 9095 - 1, 2, 3 더하기</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const [_, ...nums] = input.map(Number);
+const dp = [0, 1, 2, 4];
+const result = [];
+
+for (let i = 4; i < 11; i++) {
+  dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3];
+}
+
+nums.forEach(n => result.push(dp[n]));
+
+console.log(result.join('\n'));
+```
+
+</details>
+
+<details>
     <summary>[Lv.3] 프로그래머스 - 등굣길</summary>
 
 ```js
