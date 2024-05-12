@@ -82,6 +82,28 @@ console.log(recursion(Number(input)));
 </details>
 
 <details>
+    <summary>[S3] 백준 2579 - 계단 오르기</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const [stairsCount, ...scores] = input.map(Number);
+const result = [scores[0], scores[0] + scores[1]];
+
+result.push(scores[2] + Math.max(scores[0], scores[1]));
+
+for (let i = 3; i < stairsCount; i++) {
+  result.push(
+    scores[i] + Math.max(result[i - 2], scores[i - 1] + result[i - 3])
+  );
+}
+
+console.log(result[stairsCount - 1]);
+```
+
+</details>
+
+<details>
     <summary>[S3] 백준 9095 - 1, 2, 3 더하기</summary>
 
 ```js
