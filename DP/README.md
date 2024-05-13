@@ -125,6 +125,35 @@ console.log(result.join('\n'));
 </details>
 
 <details>
+    <summary>[S2] 백준 1793 - 타일링</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const ns = input.map(Number);
+const memo = [];
+let result = '';
+
+memo.push(1);
+memo.push(1);
+memo.push(3);
+
+for (const n of ns) {
+  if (memo[n] === undefined) {
+    for (let i = memo.length; i <= n; i++) {
+      memo.push(BigInt(memo[i - 1]) + BigInt(memo[i - 2]) * 2n);
+    }
+  }
+
+  result += memo[n].toString() + '\n';
+}
+
+console.log(result.trimEnd());
+```
+
+</details>
+
+<details>
     <summary>[Lv.3] 프로그래머스 - 등굣길</summary>
 
 ```js
