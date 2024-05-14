@@ -1,6 +1,49 @@
 # 구현
 
 <details>
+    <summary>[S2] 백준 18111 - 마인크래프트</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const [NMB, ...earth] = input.map(v => v.split(' ').map(Number));
+const [N, M, B] = NMB;
+const result = [Number.MAX_SAFE_INTEGER, 0];
+const heightCount = new Array(257).fill(0);
+
+for (let i = 0; i < N; i++) {
+  for (let j = 0; j < M; j++) {
+    heightCount[earth[i][j]]++;
+  }
+}
+
+for (let target = 256; target >= 0; target--) {
+  let addBlock = 0;
+  let removeBlock = 0;
+
+  heightCount.forEach((count, height) => {
+    if (height > target) {
+      removeBlock += (height - target) * count;
+    } else if (height < target) {
+      addBlock += (target - height) * count;
+    }
+  });
+
+  if (addBlock - removeBlock > B) continue;
+  const time = addBlock + removeBlock * 2;
+
+  if (time < result[0]) {
+    result[0] = time;
+    result[1] = target;
+  } else if (time > result[0]) break;
+}
+
+console.log(result.join(' '));
+```
+
+</details>
+
+<details>
     <summary>[S3] 백준 1051 - 숫자 정사각형</summary>
 
 ```js
