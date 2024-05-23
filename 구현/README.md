@@ -464,3 +464,95 @@ console.log(result.join('\n'));
 ```
 
 </details>
+
+<details>
+    <summary>[G5] 백준 16935 - 배열 돌리기 3</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+let [NMR, ...nums] = input.split('\n').map(v => v.split(' '));
+const acc = nums.pop();
+let newNums = [];
+let row = 0;
+let col = 0;
+
+const calculation = {
+  1: () => nums.reverse(),
+  2: () => nums.forEach(ns => ns.reverse()),
+  3: () => {
+    row = nums.length;
+    col = nums[0].length;
+    newNums = Array.from({ length: col }, () => Array(row).fill(0));
+
+    for (let i = 0; i < row; i++) {
+      for (let j = 0; j < col; j++) {
+        newNums[j][row - i - 1] = nums[i][j];
+      }
+    }
+
+    nums = newNums;
+  },
+  4: () => {
+    row = nums.length;
+    col = nums[0].length;
+    newNums = Array.from({ length: col }, () => Array(row).fill(0));
+
+    for (let i = 0; i < row; i++) {
+      for (let j = 0; j < col; j++) {
+        newNums[col - j - 1][i] = nums[i][j];
+      }
+    }
+
+    nums = newNums;
+  },
+  5: () => {
+    row = nums.length;
+    col = nums[0].length;
+    newNums = Array.from({ length: row }, () => Array(col).fill(0));
+
+    for (let i = 0; i < row; i++) {
+      for (let j = 0; j < col; j++) {
+        if (i < row / 2 && j < col / 2) {
+          newNums[i][j + col / 2] = nums[i][j];
+        } else if (i < row / 2 && j >= col / 2) {
+          newNums[i + row / 2][j] = nums[i][j];
+        } else if (i >= row / 2 && j >= col / 2) {
+          newNums[i][j - col / 2] = nums[i][j];
+        } else {
+          newNums[i - row / 2][j] = nums[i][j];
+        }
+      }
+    }
+
+    nums = newNums;
+  },
+  6: () => {
+    row = nums.length;
+    col = nums[0].length;
+    newNums = Array.from({ length: row }, () => Array(col).fill(0));
+
+    for (let i = 0; i < row; i++) {
+      for (let j = 0; j < col; j++) {
+        if (i < row / 2 && j < col / 2) {
+          newNums[i + row / 2][j] = nums[i][j];
+        } else if (i < row / 2 && j >= col / 2) {
+          newNums[i][j - col / 2] = nums[i][j];
+        } else if (i >= row / 2 && j >= col / 2) {
+          newNums[i - row / 2][j] = nums[i][j];
+        } else {
+          newNums[i][j + col / 2] = nums[i][j];
+        }
+      }
+    }
+
+    nums = newNums;
+  },
+};
+
+acc.forEach(accType => calculation[accType]());
+
+console.log(nums.map(n => n.join(' ')).join('\n'));
+```
+
+</details>
