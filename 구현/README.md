@@ -360,6 +360,38 @@ console.log(result.join(' '));
 </details>
 
 <details>
+    <summary>[S1] 백준 1713 - 후보 추천하기</summary>
+
+```js
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const [N, _, recomendNums] = input.map(v => v.split(' ').map(Number));
+const frame = new Map();
+
+recomendNums.forEach(number => {
+  if (frame.size >= N && !frame.has(number)) {
+    const min = Math.min(...[...frame].map(v => v[1]));
+
+    frame.delete([...frame].find(v => v[1] === min)[0]);
+    frame.set(number, 1);
+  } else if (frame.has(number)) {
+    frame.set(number, frame.get(number) + 1);
+  } else {
+    frame.set(number, 1);
+  }
+});
+
+console.log(
+  [...frame]
+    .map(candidate => candidate[0])
+    .sort((a, b) => a - b)
+    .join(' ')
+);
+```
+
+</details>
+
+<details>
     <summary>[G5] 백준 14503 - 로봇 청소기</summary>
 
 ```js
