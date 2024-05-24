@@ -1,56 +1,85 @@
 # DP
 
+### 다이나믹 프로그래밍(DP)의 필요 조건
+
 <details>
-    <summary>[B1] 백준 2775 - 부녀회장이 될테야</summary>
+    <summary>필요 조건</summary>
+
+#### 1) 큰 문제가 작은 문제로 나누어진다
+
+#### 2) ★ 작은 문제의 정답이 큰 문제에서도 동일하다
+
+</details>
+
+<details>
+    <summary>[Lv.3] 프로그래머스 - 등굣길</summary>
 
 ```js
-const fs = require('fs');
-const input = fs.readFileSync('/dev/stdin').toString().trim();
-const [T, ...kn] = input.split('\n').map(Number);
-const memo = Array.from({ length: 15 }, () => Array(14).fill(0));
-const result = [];
+function solution(m, n, puddles) {
+  const memo = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
 
-for (let i = 0; i < 15; i++) {
-  for (let j = 0; j < 14; j++) {
-    if (i === 0) {
-      memo[i][j] = j + 1;
-    } else if (j === 0) {
-      memo[i][j] = 1;
-    } else {
-      memo[i][j] = memo[i - 1][j] + memo[i][j - 1];
+  puddles.forEach(([x, y]) => (memo[y][x] = -1));
+
+  memo[1][1] = 1;
+
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= m; j++) {
+      if (memo[i][j] === -1) continue;
+      if (memo[i][j - 1] !== -1) memo[i][j] += memo[i][j - 1] % 1000000007;
+      if (memo[i - 1][j] !== -1) memo[i][j] += memo[i - 1][j] % 1000000007;
     }
   }
+
+  return memo[n][m] % 1000000007;
 }
-
-for (let i = 0; i < T; i++) {
-  const k = kn[i * 2];
-  const n = kn[i * 2 + 1] - 1;
-
-  result.push(memo[k][n]);
-}
-
-console.log(result.join('\n'));
 ```
 
 </details>
 
 <details>
-    <summary>[B1] 백준 2748 - 피보나치 수 2</summary>
+    <summary>[Lv.3] 프로그래머스 - 정수 삼각형</summary>
+
+```js
+function solution(triangle) {
+  const memo = [...triangle];
+
+  for (let i = memo.length - 2; 0 <= i; i--) {
+    for (let j = 0; j < memo[i].length; j++) {
+      memo[i][j] += Math.max(memo[i + 1][j], memo[i + 1][j + 1]);
+    }
+  }
+
+  return memo[0][0];
+}
+```
+
+</details>
+
+<details>
+    <summary>[S2] 백준 1793 - 타일링</summary>
 
 ```js
 const fs = require('fs');
-const input = fs.readFileSync('/dev/stdin').toString().trim();
-const memo = [0, 1];
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const ns = input.map(Number);
+const memo = [];
+let result = '';
 
-const recursion = n => {
-  if (memo[n] !== undefined) return memo[n];
+memo.push(1);
+memo.push(1);
+memo.push(3);
 
-  memo[n] = BigInt(recursion(n - 1)) + BigInt(recursion(n - 2));
+for (const n of ns) {
+  if (memo[n] === undefined) {
+    for (let i = memo.length; i <= n; i++) {
+      memo.push(BigInt(memo[i - 1]) + BigInt(memo[i - 2]) * 2n);
+    }
+  }
 
-  return memo[n];
-};
+  result += memo[n].toString() + '\n';
+}
 
-console.log(recursion(Number(input)).toString());
+console.log(result.trimEnd());
 ```
 
 </details>
@@ -125,74 +154,56 @@ console.log(result.join('\n'));
 </details>
 
 <details>
-    <summary>[S2] 백준 1793 - 타일링</summary>
+    <summary>[B1] 백준 2775 - 부녀회장이 될테야</summary>
 
 ```js
 const fs = require('fs');
-const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
-const ns = input.map(Number);
-const memo = [];
-let result = '';
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+const [T, ...kn] = input.split('\n').map(Number);
+const memo = Array.from({ length: 15 }, () => Array(14).fill(0));
+const result = [];
 
-memo.push(1);
-memo.push(1);
-memo.push(3);
-
-for (const n of ns) {
-  if (memo[n] === undefined) {
-    for (let i = memo.length; i <= n; i++) {
-      memo.push(BigInt(memo[i - 1]) + BigInt(memo[i - 2]) * 2n);
+for (let i = 0; i < 15; i++) {
+  for (let j = 0; j < 14; j++) {
+    if (i === 0) {
+      memo[i][j] = j + 1;
+    } else if (j === 0) {
+      memo[i][j] = 1;
+    } else {
+      memo[i][j] = memo[i - 1][j] + memo[i][j - 1];
     }
   }
-
-  result += memo[n].toString() + '\n';
 }
 
-console.log(result.trimEnd());
+for (let i = 0; i < T; i++) {
+  const k = kn[i * 2];
+  const n = kn[i * 2 + 1] - 1;
+
+  result.push(memo[k][n]);
+}
+
+console.log(result.join('\n'));
 ```
 
 </details>
 
 <details>
-    <summary>[Lv.3] 프로그래머스 - 등굣길</summary>
+    <summary>[B1] 백준 2748 - 피보나치 수 2</summary>
 
 ```js
-function solution(m, n, puddles) {
-  const memo = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim();
+const memo = [0, 1];
 
-  puddles.forEach(([x, y]) => (memo[y][x] = -1));
+const recursion = n => {
+  if (memo[n] !== undefined) return memo[n];
 
-  memo[1][1] = 1;
+  memo[n] = BigInt(recursion(n - 1)) + BigInt(recursion(n - 2));
 
-  for (let i = 1; i <= n; i++) {
-    for (let j = 1; j <= m; j++) {
-      if (memo[i][j] === -1) continue;
-      if (memo[i][j - 1] !== -1) memo[i][j] += memo[i][j - 1] % 1000000007;
-      if (memo[i - 1][j] !== -1) memo[i][j] += memo[i - 1][j] % 1000000007;
-    }
-  }
+  return memo[n];
+};
 
-  return memo[n][m] % 1000000007;
-}
-```
-
-</details>
-
-<details>
-    <summary>[Lv.3] 프로그래머스 - 정수 삼각형</summary>
-
-```js
-function solution(triangle) {
-  const memo = [...triangle];
-
-  for (let i = memo.length - 2; 0 <= i; i--) {
-    for (let j = 0; j < memo[i].length; j++) {
-      memo[i][j] += Math.max(memo[i + 1][j], memo[i + 1][j + 1]);
-    }
-  }
-
-  return memo[0][0];
-}
+console.log(recursion(Number(input)).toString());
 ```
 
 </details>
